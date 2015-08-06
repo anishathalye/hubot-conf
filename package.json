@@ -1,0 +1,13 @@
+{
+  "name": "hubot-conf",
+  "description": "A configuration management system for Hubot",
+  "version": "1.0.0",
+  "author": "Anish Athalye <me@anishathalye.com>",
+  "license": "MIT",
+  "keywords": "hubot, hubot-scripts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/anishathalye/hubot-conf"
+  },
+  "main": "index.coffee"
+}
