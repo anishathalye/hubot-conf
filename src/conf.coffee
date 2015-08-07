@@ -6,6 +6,7 @@
 #   hubot conf set <property> "<value>" - set a property value
 #   hubot conf unset <property> - unset a property
 #   hubot conf dump - list all configuration values
+#   hubot conf dump <prefix> - list all configuration values matching prefix
 #
 # Author:
 #   anishathalye
@@ -50,8 +51,10 @@ module.exports = (robot) ->
     else
       res.send "#{id} already unset"
 
-  robot.respond ///conf\s+dump///, (res) ->
+  robot.respond ///conf\s+dump(?:\s+(#{IDENTIFIER}))?///, (res) ->
+    prefix = res.match[1]
     response = []
     for key in conf.keys()
-      response.push "#{key} = `#{JSON.stringify conf.get key}`"
+      if (not prefix?) or key.indexOf(prefix) is 0
+        response.push "#{key} = `#{JSON.stringify conf.get key}`"
     res.send response.join "\n"
