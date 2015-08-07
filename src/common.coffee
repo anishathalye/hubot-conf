@@ -31,7 +31,7 @@ exports.Conf = class Conf
       return false
 
   keys: =>
-    return Object.keys(@cache)
+    return Object.keys(@cache).sort()
 
 IDENTIFIER = exports.IDENTIFIER = "[a-z]+(?:\\.[a-z]+)*"
 
