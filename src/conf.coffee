@@ -36,13 +36,17 @@ module.exports = (robot) ->
     catch err
       res.send "could not parse value"
       return
-    conf.set id, parsed
-    res.send "#{id} = `#{JSON.stringify parsed}`"
+    old = conf.set id, parsed
+    if old?
+      res.send "#{id} = `#{JSON.stringify parsed}` (previously `#{JSON.stringify old}`)"
+    else
+      res.send "#{id} = `#{JSON.stringify parsed}`"
 
   robot.respond ///conf\s+unset\s+(#{IDENTIFIER})///, (res) ->
     id = res.match[1]
-    if conf.unset id
-      res.send "#{id} unset"
+    value = conf.unset id
+    if value?
+      res.send "#{id} unset (previously `#{JSON.stringify value}`)"
     else
       res.send "#{id} already unset"
 

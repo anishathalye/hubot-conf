@@ -21,14 +21,17 @@ exports.Conf = class Conf
     return @cache[key]
 
   set: (key, value) =>
+    old = @cache[key]
     @cache[key] = value
+    return old
 
   unset: (key) =>
     if @exists key
+      value = @cache[key]
       delete @cache[key]
-      return true
+      return value
     else
-      return false
+      return null
 
   keys: =>
     return Object.keys(@cache).sort()
