@@ -26,6 +26,11 @@ module.exports = (robot) ->
   unspaced = (spaced) ->
     spaced.replace /\s+/g, "."
 
+  unique = (arr) ->
+    output = {}
+    output[arr[key]] = arr[key] for key in [0...arr.length]
+    value for key, value of output
+
   robot.respond ///conf\s+get\s+"(#{SPACED_IDENTIFIER})"///, (res) ->
     respondGet res, unspaced(res.match[1])
 
@@ -84,7 +89,17 @@ module.exports = (robot) ->
 
   respondDump = (res, prefix) ->
     response = []
-    for key in conf.keys()
+    keys = conf.keys()
+    fixCase = (key) ->
+      key.toLowerCase().replace(/_/g, '.').substring('HUBOT_'.length)
+    envs = (fixCase(key) for own key, val of process.env when key.indexOf('HUBOT_') is 0)
+    keys = unique(keys.concat(envs))
+    keys.sort()
+    for key in keys
       if (not prefix?) or key.indexOf(prefix) is 0
-        response.push "#{key} = `#{JSON.stringify conf.get key}`"
+        [value, set] = common.resolveStat conf, key
+        if set
+          response.push "#{key} = `#{JSON.stringify value}`"
+        else
+          response.push "#{key} = `#{JSON.stringify value}` (environment variable)"
     res.send response.join "\n"
