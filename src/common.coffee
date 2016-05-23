@@ -37,6 +37,7 @@ exports.Conf = class Conf
     return Object.keys(@cache).sort()
 
 IDENTIFIER = exports.IDENTIFIER = "[a-z]+(?:\\.[a-z]+)*"
+SPACED_IDENTIFIER = exports.SPACED_IDENTIFIER = "[a-z]+(?:\\s+[a-z]+)*"
 
 testId = exports.testId = (id) ->
   return ///^#{IDENTIFIER}$///.test(id)
