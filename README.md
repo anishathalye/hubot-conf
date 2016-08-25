@@ -2,9 +2,18 @@
 
 A configuration management system for hubot.
 
-The system has two parts. It can be used by hubot script implementors to read
-configuration values. It can also be used by hubot users to be able to
-dynamically set (or override) configuration values through the chat interface.
+The system has two parts:
+
+**For script implementers**: It can be used by hubot script implementers to
+read configuration values, either ones that are dynamically set via chat or
+statically set via environment variables.
+
+**For users**: It can also be used by hubot users to dynamically set (or
+override) configuration values through the chat interface.
+
+## Demo
+
+![Demo](https://raw.githubusercontent.com/anishathalye/hubot-conf/docs/demo.png)
 
 ## Chat Interface (for users)
 
@@ -23,11 +32,16 @@ Then add **hubot-conf** to your `external-scripts.json`:
 ]
 ```
 
-To see how to use the chat interface, run `hubot help conf`.
+To see how to use the chat interface, say `{botname} help conf` in the chat.
 
-## Library (for script implementors)
+If you prefer to use environment variables for settings, you can do so.
+Configuration setting names are mapped as follows: `property.path` is mapped to
+the `HUBOT_PROPERTY_PATH` environment variable (replace `.` with `_`, make
+uppercase, and prepend with `HUBOT_`).
 
-If you're a script implementor, you can use hubot-conf as a library to read
+## Library (for script implementers)
+
+If you're a script implementer, you can use hubot-conf as a library to read
 configuration values. The library supports both dynamically set values (through
 the chat interface) and statically set values (as environment variables). If
 the hubot user hasn't enabled the chat interface, the library will still work;
@@ -47,13 +61,13 @@ repository. Here is a sample use of the library:
 
 ```coffee
 module.exports = (robot) ->
-  # config = require('hubot-conf')('packagename', robot)
   config = require('hubot-conf')('example', robot)
 
   robot.respond /hello/, (msg) ->
     # read the 'response.hello' property for the package 'example'
     #
     # it could be set by someone running something like
+    #
     #     hubot conf set example.response.hello "Hello there!"
     #
     # or it could be set in the HUBOT_EXAMPLE_RESPONSE_HELLO environment
@@ -84,9 +98,14 @@ hubot> hubot goodbye
 :(
 ```
 
+For more in-depth uses of the library, take a look at
+[hubot-group][hubot-group] and [hubot-shortcut][hubot-shortcut].
+
 ## License
 
 Copyright (c) 2015-2016 Anish Athalye. Released under the MIT License. See
 [LICENSE.md][license] for details.
 
 [license]: LICENSE.md
+[hubot-group]: https://github.com/anishathalye/hubot-group
+[hubot-shortcut]: https://github.com/anishathalye/hubot-shortcut
