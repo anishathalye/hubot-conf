@@ -1,6 +1,11 @@
 # Description:
 #   A script that allows setting configuration variables.
 #
+# Configuration:
+#   HUBOT_CONF_HIDDEN - a comma-separated list of properties corresponding to
+#     environment variables that are hidden and not visible from the chat
+#     frontend.
+#
 # Commands:
 #   hubot conf get <property> - get a property value
 #   hubot conf get "<spaced property>" - get a property value
@@ -31,6 +36,10 @@ module.exports = (robot) ->
     output[arr[key]] = arr[key] for key in [0...arr.length]
     value for key, value of output
 
+  hidden = (key) ->
+    list = process.env['HUBOT_CONF_HIDDEN']
+    list? and key in list.split ','
+
   robot.respond ///conf\s+get\s+"(#{SPACED_IDENTIFIER})"///, (res) ->
     respondGet res, unspaced(res.match[1])
 
@@ -43,7 +52,10 @@ module.exports = (robot) ->
       if set
         res.send "#{id} = `#{JSON.stringify value}`"
       else
-        res.send "#{id} = `#{JSON.stringify value}` (environment variable)"
+        if hidden id
+          res.send "#{id} (environment variable, hidden)"
+        else
+          res.send "#{id} = `#{JSON.stringify value}` (environment variable)"
     else
       res.send "#{id} is unset"
 
@@ -101,5 +113,8 @@ module.exports = (robot) ->
         if set
           response.push "#{key} = `#{JSON.stringify value}`"
         else
-          response.push "#{key} = `#{JSON.stringify value}` (environment variable)"
+          if hidden key
+            res.send "#{key} (environment variable, hidden)"
+          else
+            response.push "#{key} = `#{JSON.stringify value}` (environment variable)"
     res.send response.join "\n"

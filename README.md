@@ -39,6 +39,11 @@ Configuration setting names are mapped as follows: `property.path` is mapped to
 the `HUBOT_PROPERTY_PATH` environment variable (replace `.` with `_`, make
 uppercase, and prepend with `HUBOT_`).
 
+### Configuration
+
+* `HUBOT_CONF_HIDDEN` - a comma-separated list of properties corresponding to
+  environment variables that are hidden and not visible from the chat frontend.
+
 ## Library (for script implementers)
 
 If you're a script implementer, you can use hubot-conf as a library to read
