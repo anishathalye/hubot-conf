@@ -59,11 +59,11 @@ module.exports = (robot) ->
     else
       res.send "#{id} is unset"
 
-  robot.respond ///conf\s+set\s+"(#{SPACED_IDENTIFIER})"\s+(".*")///, (res) ->
-    respondSet res, unspaced(res.match[1]), res.match[2]
+  robot.respond ///conf\s+set\s+"(#{SPACED_IDENTIFIER})"\s+(["\u201C].*["\u201D])///, (res) ->
+    respondSet res, unspaced(res.match[1]), res.match[2].replace(/[\u201C\u201D]/g, '"')
 
-  robot.respond ///conf\s+set\s+(#{IDENTIFIER})\s+(".*")///, (res) ->
-    respondSet res, res.match[1], res.match[2]
+  robot.respond ///conf\s+set\s+(#{IDENTIFIER})\s+(["\u201C].*["\u201D])///, (res) ->
+    respondSet res, res.match[1], res.match[2].replace(/[\u201C\u201D]/g, '"')
 
   respondSet = (res, id, value) ->
     try
