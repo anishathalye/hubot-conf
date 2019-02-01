@@ -9,5 +9,8 @@
     "type": "git",
     "url": "https://github.com/anishathalye/hubot-conf"
   },
-  "main": "index.coffee"
+  "peerDependencies": {
+    "hubot": "2.x || 3.x"
+  },
+  "main": "index.js"
 }
