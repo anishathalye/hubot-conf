@@ -13,7 +13,7 @@ override) configuration values through the chat interface.
 
 ## Demo
 
-![Demo](https://raw.githubusercontent.com/anishathalye/hubot-conf/docs/demo.png)
+![Demo](https://raw.githubusercontent.com/anishathalye/assets/master/hubot-conf/demo.png)
 
 ## Chat Interface (for users)
 
