@@ -108,7 +108,7 @@ For more in-depth uses of the library, take a look at
 
 ## License
 
-Copyright (c) 2015-2019 Anish Athalye. Released under the MIT License. See
+Copyright (c) Anish Athalye. Released under the MIT License. See
 [LICENSE.md][license] for details.
 
 [license]: LICENSE.md
